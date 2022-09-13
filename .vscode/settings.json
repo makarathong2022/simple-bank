@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "0.0.0.0",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Bank System",
+            "database": "BankSystem",
+            "username": "root",
+            "password": "Thong@123"
+        }
+    ],
+    "commentTranslate.hover.enabled": true
+}
