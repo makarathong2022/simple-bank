@@ -2,13 +2,13 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "0.0.0.0",
+            "server": "simple-bank.ci5bs4qfk9kq.ap-southeast-1.rds.amazonaws.com",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "Bank System",
-            "database": "BankSystem",
+            "name": "Simple bank",
+            "database": "simple_bank",
             "username": "root",
-            "password": "Thong@123"
+            "password": "Vk7dYrptO5AMuHKQUydk"
         }
     ],
     "commentTranslate.hover.enabled": true
