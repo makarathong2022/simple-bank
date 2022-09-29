@@ -2,13 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: simple-bank-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    # this will rewrite request under / + second capture group
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: "api.simple-bank-system.link"
+  - host: api.simple-bank-system.link
     http:
       paths:
       - pathType: Prefix
-        path: "/"
+        path: "/*"
         backend:
           service:
             name: simple-bank-api-service
