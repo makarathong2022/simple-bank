@@ -18,5 +18,3 @@ spec:
             name: simple-bank-api-service
             port:
               number: 80
-
-
