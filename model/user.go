@@ -18,6 +18,7 @@ type UserResponse struct {
 	Email             string    `json:"email"`
 	PasswordChangedAt time.Time `json:"password_changed_at"`
 	CreatedAt         time.Time `json:"created_at"`
+	Test              string    `json:"test"`
 }
 
 func NewUserResponse(user db.User) UserResponse {
@@ -26,6 +27,7 @@ func NewUserResponse(user db.User) UserResponse {
 		FullName:          user.FullName,
 		Email:             user.Email,
 		PasswordChangedAt: user.PasswordChangedAt,
+		Test:              user.Username + user.FullName,
 	}
 }
 
@@ -36,4 +38,14 @@ type CreateUserResponse struct {
 	FullName          string    `json:"full_name"`
 	PasswordChangedAt time.Time `json:"password_changed_at"`
 	CreatedAt         time.Time `json:"created_at"`
+}
+
+type LoginUserRequest struct {
+	Username string `json:"username" binding:"required,alphanum"`
+	Password string `json:"password" binding:"required,min=6"`
+}
+
+type LoginUserResponse struct {
+	AccessToken string       `json:"access_token"`
+	User        UserResponse `json:"user"`
 }
