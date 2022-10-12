@@ -3,48 +3,16 @@ package api
 import (
 	"database/sql"
 	"net/http"
-	"time"
 
 	db "github.com/bank/simple-bank/db/sqlc"
+	"github.com/bank/simple-bank/model"
 	"github.com/bank/simple-bank/util"
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 )
 
-type createUserRequest struct {
-	Username string `json:"username" binding:"required,alphanum"`
-	Password string `json:"password" binding:"required,min=6"`
-	Email    string `json:"email" binding:"required,email"`
-	FullName string `json:"full_name" binding:"required"`
-}
-type userResponse struct {
-	Username          string    `json:"username"`
-	FullName          string    `json:"full_name"`
-	Email             string    `json:"email"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	CreatedAt         time.Time `json:"created_at"`
-}
-
-func newUserResponse(user db.User) userResponse {
-	return userResponse{
-		Username:          user.Username,
-		FullName:          user.FullName,
-		Email:             user.Email,
-		PasswordChangedAt: user.PasswordChangedAt,
-	}
-}
-
-type createUserResponse struct {
-	Username          string    `json:"username"`
-	Password          string    `json:"password"`
-	Email             string    `json:"email"`
-	FullName          string    `json:"full_name"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	CreatedAt         time.Time `json:"created_at"`
-}
-
 func (server *Server) createUser(ctx *gin.Context) {
-	var req createUserRequest
+	var req model.CreateUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
@@ -76,7 +44,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
-	rsp := newUserResponse(user)
+	rsp := model.NewUserResponse(user)
 	ctx.JSON(http.StatusOK, rsp)
 }
 
@@ -86,8 +54,8 @@ type loginUserRequest struct {
 }
 
 type loginUserResponse struct {
-	AccessToken string       `json:"access_token"`
-	User        userResponse `json:"user"`
+	AccessToken string             `json:"access_token"`
+	User        model.UserResponse `json:"user"`
 }
 
 func (server *Server) loginUser(ctx *gin.Context) {
@@ -124,7 +92,7 @@ func (server *Server) loginUser(ctx *gin.Context) {
 
 	rsp := loginUserResponse{
 		AccessToken: accessToken,
-		User:        newUserResponse(user),
+		User:        model.NewUserResponse(user),
 	}
 
 	ctx.JSON(http.StatusOK, rsp)
