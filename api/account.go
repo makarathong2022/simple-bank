@@ -7,19 +7,15 @@ import (
 	"net/http"
 
 	db "github.com/bank/simple-bank/db/sqlc"
+	"github.com/bank/simple-bank/model"
 	"github.com/bank/simple-bank/token"
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 )
 
-type createAccountRequest struct {
-	Owner    string `json:"owner" binding:"required"`
-	Currency string `json:"currency" binding:"required,oneof=USD EUR"`
-}
-
 // A logged-in user can only create an account for him/herself
 func (server *Server) createAccount(ctx *gin.Context) {
-	var req createAccountRequest
+	var req model.Account
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
@@ -83,22 +79,9 @@ func (server *Server) getAccount(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, account)
 }
 
-type listAccountRequest struct {
-	PageID   int32 `form:"page_id" binding:"required,min=1"`
-	PageSize int32 `form:"page_size" binding:"required,min=5,max=10"`
-}
-
-type Response struct {
-	HasNext  bool         `json:"has_next"`
-	PageSize int32        `json:"page_size"`
-	Page     int32        `json:"page"`
-	Total    int          `json:"total"`
-	Result   []db.Account `json:"result"`
-}
-
 // A logged-in user can only list accounts that belong to him/here
 func (sever *Server) listAccounts(ctx *gin.Context) {
-	var req listAccountRequest
+	var req model.PageRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
@@ -119,7 +102,7 @@ func (sever *Server) listAccounts(ctx *gin.Context) {
 		return
 	}
 
-	var res Response
+	var res model.Response
 	res.HasNext = len(accounts) == int(req.PageSize)
 	res.Page = req.PageID
 	res.PageSize = req.PageSize

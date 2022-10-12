@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "simple-bank.ci5bs4qfk9kq.ap-southeast-1.rds.amazonaws.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Simple Bank",
+            "database": "simple_bank",
+            "username": "root",
+            "password": "Vk7dYrptO5AMuHKQUydk"
+        }
+    ]
+}

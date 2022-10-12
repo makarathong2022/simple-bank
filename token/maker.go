@@ -3,7 +3,7 @@ package token
 import "time"
 
 /*
-The idea is to declare a general token make interface to manage the createion and verification of the tokens.
+The idea is to declare a general token make interface to manage the creation and verification of the tokens.
 */
 type Maker interface {
 	// CreateToken creates a new token for a specific username and duration
