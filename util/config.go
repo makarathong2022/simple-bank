@@ -35,5 +35,10 @@ func LoadConfig(path string) (config Config, err error) {
 
 	err = viper.Unmarshal(&config)
 
+	if err != nil {
+		log.Fatal("Convert unsuccessfully")
+		return
+	}
+
 	return
 }

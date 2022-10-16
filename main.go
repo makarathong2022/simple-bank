@@ -11,7 +11,7 @@ import (
 )
 
 /*
-- Pass "." here, which means the current folder, cuz our config file is in the same location whit this main.go file
+- Pass "." here, which means the current folder, cuz our config file is in the same location with this main.go file
 */
 func main() {
 	config, err := util.LoadConfig(".")
@@ -28,7 +28,7 @@ func main() {
 	server, err := api.NewServer(config, store)
 
 	if err != nil {
-		log.Fatal("cannot create server:", err)
+		log.Fatal("cannot create server:", err) 
 
 	}
 
