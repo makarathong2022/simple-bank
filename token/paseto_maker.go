@@ -13,6 +13,7 @@ type PasetoMaker struct {
 	paseto       *paseto.V2
 	symmetricKey []byte
 }
+
 // openssl rand -hex 64 | head -c 32
 // NewPasetoMaker creates a new PasetoMaker instance
 func NewPasetoMaker(symetricKey string) (Maker, error) {
@@ -48,4 +49,3 @@ func (maker *PasetoMaker) VerifyToken(token string) (*Payload, error) {
 	}
 	return payload, nil
 }
-
